@@ -202,9 +202,11 @@ function Sidebar({ page, setPage, botsCount }) {
           {mode === "dark" ? "Light Mode" : "Dark Mode"}
         </div>
       </div>
-      <div style={{ padding: "8px 20px", fontSize: 11, color: mode === "dark" ? "#374151" : "#94A3B8" }}>
-        {mounted && LS.get("bf_company_name", "") ? `Powered by ${LS.get("bf_company_name")}` : "Powered by OpenCode Zen"}
-      </div>
+      {mounted && LS.get("bf_company_name", "") && (
+        <div style={{ padding: "8px 20px", fontSize: 11, color: mode === "dark" ? "#374151" : "#9A94AD" }}>
+          Powered by {LS.get("bf_company_name")}
+        </div>
+      )}
     </aside>
   );
 }

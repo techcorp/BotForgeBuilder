@@ -37,7 +37,7 @@ export default function MyApp({ Component, pageProps }) {
         }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: ${mode === "dark" ? "#2D2D44" : "#CBD5E1"}; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: ${mode === "dark" ? "#2D2D44" : "#C8C2D6"}; border-radius: 10px; }
         textarea, input, select, button { font-family: inherit; }
         @keyframes fadeUp   { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
         @keyframes slideIn  { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
