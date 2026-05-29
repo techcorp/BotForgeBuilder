@@ -1030,6 +1030,28 @@ ${EMBED}
   );
 }
 
+// ─── Settings helpers ────────────────────────────────────────────────────────
+function SettingsSection({ title, children, t }) {
+  return (
+    <Card style={{ padding: 24, marginBottom: 18 }}>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: t.text, marginBottom: 18, paddingBottom: 12, borderBottom: `1px solid ${t.border}` }}>{title}</h3>
+      {children}
+    </Card>
+  );
+}
+
+function SettingsRow({ label, sub, children, t }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+      <div>
+        <div style={{ fontSize: 14, fontWeight: 500, color: t.text }}>{label}</div>
+        {sub && <div style={{ fontSize: 12, color: t.sub, marginTop: 2 }}>{sub}</div>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
 // ─── Settings ────────────────────────────────────────────────────────────────
 function Settings({ notify }) {
   const { t, mode, toggleTheme } = useTheme();
@@ -1056,28 +1078,12 @@ function Settings({ notify }) {
     notify("Settings saved! ✓");
   };
 
-  const Section = ({ title, children }) => (
-    <Card style={{ padding: 24, marginBottom: 18 }}>
-      <h3 style={{ fontSize: 15, fontWeight: 700, color: t.text, marginBottom: 18, paddingBottom: 12, borderBottom: `1px solid ${t.border}` }}>{title}</h3>
-      {children}
-    </Card>
-  );
-  const Row = ({ label, sub, children }) => (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-      <div>
-        <div style={{ fontSize: 14, fontWeight: 500, color: t.text }}>{label}</div>
-        {sub && <div style={{ fontSize: 12, color: t.sub, marginTop: 2 }}>{sub}</div>}
-      </div>
-      {children}
-    </div>
-  );
-
   return (
     <div className="fade-up" style={{ maxWidth: 640 }}>
       <h1 style={{ fontFamily: "'Syne',sans-serif", fontSize: 26, fontWeight: 800, color: t.text, marginBottom: 6 }}>Settings</h1>
       <p style={{ color: t.sub, fontSize: 14, marginBottom: 28 }}>Customize your BotForge experience</p>
 
-      <Section title="🔑 API Configuration">
+      <SettingsSection title="🔑 API Configuration" t={t}>
         <div style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", borderRadius: 10, padding: "14px 16px", fontSize: 13, color: "#6EE7B7", lineHeight: 1.7, marginBottom: 16 }}>
           <strong>✓ API keys are configured via environment variables</strong><br />
           Add your keys to <code style={{ background: "rgba(255,255,255,0.1)", padding: "1px 5px", borderRadius: 4 }}>.env.local</code> — they are never exposed to the browser.
@@ -1093,56 +1099,56 @@ function Settings({ notify }) {
             </div>
           ))}
         </div>
-      </Section>
+      </SettingsSection>
 
-      <Section title="🎨 Appearance">
-        <Row label="Theme" sub="Switch between dark and light mode">
+      <SettingsSection title="🎨 Appearance" t={t}>
+        <SettingsRow label="Theme" sub="Switch between dark and light mode" t={t}>
           <div onClick={toggleTheme} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "8px 16px", borderRadius: 8, border: `1px solid ${t.border}`, background: t.input, fontSize: 13, fontWeight: 500, color: t.text }}>
             <Icon n={mode === "dark" ? "sun" : "moon"} size={15} />
             {mode === "dark" ? "Switch to Light" : "Switch to Dark"}
           </div>
-        </Row>
-        <Row label="Accent Color" sub="Primary color used throughout the app">
+        </SettingsRow>
+        <SettingsRow label="Accent Color" sub="Primary color used throughout the app" t={t}>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             {["#7C3AED", "#2563EB", "#059669", "#DB2777", "#D97706", "#0891B2"].map(c => (
               <div key={c} onClick={() => setAccentColor(c)} style={{ width: 26, height: 26, borderRadius: "50%", background: c, cursor: "pointer", border: accentColor === c ? `3px solid ${t.text}` : "3px solid transparent", transition: "all 0.15s" }} />
             ))}
           </div>
-        </Row>
-        <Row label="Font Size" sub="Chat preview text size">
+        </SettingsRow>
+        <SettingsRow label="Font Size" sub="Chat preview text size" t={t}>
           <div style={{ display: "flex", gap: 6 }}>
             {["small", "medium", "large"].map(s => (
               <button key={s} onClick={() => setFontSize(s)} style={{ padding: "6px 12px", borderRadius: 7, border: `1px solid ${fontSize === s ? "#7C3AED" : t.border}`, background: fontSize === s ? "rgba(124,58,237,0.15)" : t.input, color: fontSize === s ? "#A78BFA" : t.sub, cursor: "pointer", fontSize: 12, fontFamily: "inherit", fontWeight: 500, textTransform: "capitalize" }}>{s}</button>
             ))}
           </div>
-        </Row>
-      </Section>
+        </SettingsRow>
+      </SettingsSection>
 
-      <Section title="💬 Chat Widget Defaults">
-        <Row label="Bubble Style" sub="Shape of chat message bubbles">
+      <SettingsSection title="💬 Chat Widget Defaults" t={t}>
+        <SettingsRow label="Bubble Style" sub="Shape of chat message bubbles" t={t}>
           <div style={{ display: "flex", gap: 6 }}>
             {["rounded", "square", "pill"].map(s => (
               <button key={s} onClick={() => setChatBubble(s)} style={{ padding: "6px 12px", borderRadius: 7, border: `1px solid ${chatBubble === s ? "#7C3AED" : t.border}`, background: chatBubble === s ? "rgba(124,58,237,0.15)" : t.input, color: chatBubble === s ? "#A78BFA" : t.sub, cursor: "pointer", fontSize: 12, fontFamily: "inherit", fontWeight: 500, textTransform: "capitalize" }}>{s}</button>
             ))}
           </div>
-        </Row>
-        <Row label="Compact Sidebar" sub="Reduce sidebar width for more content space">
+        </SettingsRow>
+        <SettingsRow label="Compact Sidebar" sub="Reduce sidebar width for more content space" t={t}>
           <div onClick={() => setSidebarCompact(!sidebarCompact)} style={{ width: 44, height: 24, borderRadius: 12, cursor: "pointer", transition: "all 0.2s", background: sidebarCompact ? "#7C3AED" : t.border, position: "relative" }}>
             <div style={{ width: 18, height: 18, borderRadius: "50%", background: "#fff", position: "absolute", top: 3, transition: "all 0.2s", left: sidebarCompact ? 22 : 3 }} />
           </div>
-        </Row>
-      </Section>
+        </SettingsRow>
+      </SettingsSection>
 
-      <Section title="🏷️ Branding">
-        <Row label="Company Name" sub="Shown as 'Powered by …' in your chatbot widget">
+      <SettingsSection title="🏷️ Branding" t={t}>
+        <SettingsRow label="Company Name" sub="Shown as 'Powered by …' in your chatbot widget" t={t}>
           <input value={companyName} onChange={e => setCompanyName(e.target.value)}
             placeholder="Your Company Name"
             style={{ padding: "8px 14px", borderRadius: 8, border: `1px solid ${t.border}`,
               background: t.input, color: t.text, fontSize: 13, outline: "none", fontFamily: "inherit", width: 220 }} />
-        </Row>
-      </Section>
+        </SettingsRow>
+      </SettingsSection>
 
-      <Section title="ℹ️ About BotForge">
+      <SettingsSection title="ℹ️ About BotForge" t={t}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
           {[["Version", "1.0.0"], ["Framework", "Next.js"], ["AI Provider", "OpenCode Zen"]].map(([k, v]) => (
             <div key={k} style={{ background: t.input, border: `1px solid ${t.border}`, borderRadius: 10, padding: "12px 14px" }}>
@@ -1151,7 +1157,7 @@ function Settings({ notify }) {
             </div>
           ))}
         </div>
-      </Section>
+      </SettingsSection>
 
       <Btn variant="success" full size="lg" onClick={save}>✓ Save Settings</Btn>
     </div>
