@@ -849,7 +849,7 @@ function Export({ bot, onBack, notify }) {
     id:             bot.id,
     name:           bot.name,
     businessName:   bot.businessName,
-    model:          bot.model?.id,
+    model:          bot.model,
     primaryColor:   tmpl.color,
     logo:           bot.logo || "",
     welcomeMessage: bot.welcomeMessage || `Hi! I'm ${bot.name}. How can I help?`,

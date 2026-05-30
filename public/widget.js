@@ -15,7 +15,9 @@
   const LOGO    = cfg.logo        || "";
   const WELCOME = cfg.welcomeMessage || `Hi! I'm ${NAME}. How can I help you today?`;
   const API_URL = cfg.apiUrl;
-  const MODEL   = cfg.model       || "claude-haiku-4-5";
+  const MODEL   = cfg.model?.id   || "claude-haiku-4-5";
+  const PROVIDER = cfg.model?.provider || "anthropic";
+  const SOURCE   = cfg.model?.source   || "zen";
   const POWERED = cfg.poweredBy   || "";
 
   // ── Inject Styles ──────────────────────────────────────────────────────────
@@ -245,7 +247,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: { id: MODEL, provider: "anthropic", source: "zen" },
+          model: { id: MODEL, provider: PROVIDER, source: SOURCE },
           systemPrompt: cfg.systemPrompt || `You are ${NAME}, assistant for ${BIZ}. Be helpful and concise.`,
           messages: messages,
         }),
