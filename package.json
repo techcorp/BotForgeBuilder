@@ -9,7 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "formidable": "^3.5.4",
+    "jsonwebtoken": "^9.1.2",
     "mongoose": "^9.6.3",
     "next": "16.2.6",
     "pdf-parse": "^2.4.5",
